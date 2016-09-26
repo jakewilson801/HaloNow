@@ -1,0 +1,3 @@
+rootProject.name = 'HaloNow'
+
+include ':app'
