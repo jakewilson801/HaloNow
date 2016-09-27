@@ -11,20 +11,27 @@ import {
 var RecentGamesScreen = require('./RecentGamesScreen');
 
 class HaloNow  extends React.Component {
+
     render() {
         return (
+            <View style={styles.container}>
+            <StatusBar
+              barStyle={"light-content"}
+              backgroundColor={"rgb(255,45,61)"}/>
             <NavigatorIOS
-              backgroundColor={"rgb(230,45,61)"}
+              backgroundColor={"rgb(255,45,61)"}
               barStyle={"light-content"}
               barTintColor={'rgb(255,45,61)'}
               translucent={true}
-              titleTextColor={'white'}
               style={styles.container}
+              titleTextColor={'white'}
               initialRoute={{
                 title: 'Recent Games',
                 component: RecentGamesScreen,
+                statusBarHidden: true
               }}
-            />
+           />
+            </View>
         );
     }
 }
