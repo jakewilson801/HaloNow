@@ -1,7 +1,3 @@
-//var React = require('react');
-//var ReactNative = require('react-native');
-//import React, {Component} from 'react';
-
 import React, { Component } from 'react';
 
 import {
@@ -23,7 +19,7 @@ var API_ARGS = { method: 'GET',
                  headers: {
                    'Accept': 'application/json',
                    'Content-Type': 'application/json',
-                   'Ocp-Apim-Subscription-Key': '2fd7db4f2c804a018ffff4b8b1c1d2bd',
+                   'Ocp-Apim-Subscription-Key': 'd0bd8c751592467cbaea09e72f64dc19',
                  }
                };
 
@@ -46,7 +42,6 @@ class RecentGamesScreen extends Component {
     }
     
     loadGames() {
-        //this.timeoutID = null;
         this.setState({isLoading: true, refreshing: true, dataSource: this.getDataSource([])})
         fetch(API_URL, API_ARGS)
           .then((response) => {
@@ -123,16 +118,12 @@ class RecentGamesScreen extends Component {
             </View>
            );
     }
-                           // tintColor="#ff0000" 
-                          //title="Loading..."
-    //progressBackgroundColor="#ffff00"
-    //colors={['#ff0000', '#00ff00', '#0000ff']} // 
 }
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   centerText: {
     alignItems: 'center',
@@ -142,7 +133,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
   },
   rowSeparator: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     height: 1 ,
     marginLeft: 4,
   },

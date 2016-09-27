@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 var maps = require("./maps.json");
+var playlists = require("./playlists.json")
 
 class GameCell extends Component {
     render() {
@@ -20,6 +21,7 @@ class GameCell extends Component {
         return (
             <View>
              <TouchableElement
+               underlayColor={'white'}
                onShowUnderlay={this.props.onHighlight}
                onHideUnderlay={this.props.onUnhighlight}
                onPress={this.props.onSelect}>
@@ -30,7 +32,10 @@ class GameCell extends Component {
                   />
                 <View style={styles.textContainer}>
                 <Text style={styles.mapTitle} numberOfLines={1}>
-                 {this.getGameResult(this.props.game.Players[0].Result)}                
+                 {this.getTitle(this.props.game)}
+                </Text>
+                <Text style={{color: 'white', fontSize: 12}}>
+                  {this.getKDLabel(this.props.game)}
                 </Text>
                </View>
               </View>
@@ -38,8 +43,33 @@ class GameCell extends Component {
            </View>
         )
     }
+
+    getTitle(game){
+        return `${this.getPlayListTitle(game)} ${this.getScore(game)} ${this.getGameResult(this.props.game.Players[0].Result)}`
+    }
     
-    getGameResult(i) {
+    getKDLabel(game){
+        var isPositive = false;
+        var kd = game.Players[0].TotalKills - game.Players[0].TotalDeaths;
+        if(kd > 0){
+            kd = `+${kd}`
+        }
+        return `K/D ${kd} A ${game.Players[0].TotalAssists}`;
+    }
+    
+    getPlayListTitle(game){
+        for(var x = 0; x < playlists.length; x++) {
+            if(playlists[x].id === game.HopperId){
+                return playlists[x].name;
+            }
+        }
+    }
+
+    getScore(game){
+        return `${game.Teams[0].Score}-${game.Teams[1].Score}`
+    }
+    
+    getGameResult(i){
         switch(i) {
         case 0:
             return "Did Not Finish";
@@ -54,7 +84,7 @@ class GameCell extends Component {
         }
     }
 
-    getMapImage(id) {
+    getMapImage(id){
         for(var x = 0; x < maps.length; x++) {
             if(id === maps[x].id) {
                 return maps[x].imageUrl;
@@ -67,16 +97,16 @@ class GameCell extends Component {
 var styles = StyleSheet.create({
   textContainer: {
     flex: 1,
+    flexDirection: 'column'
   },
   mapTitle: {
-    flex: 1,
+    color: 'white',
     fontSize: 16,
-    fontWeight: '500',
     marginBottom: 2,
   },
   row: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'rgb(0, 0, 0)',
     flexDirection: 'row',
     padding: 5,
   },
@@ -87,7 +117,7 @@ var styles = StyleSheet.create({
     width: 93,
   },
   cellBorder: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.001)',
     height: StyleSheet.hairlineWidth,
     marginLeft: 4,
   },

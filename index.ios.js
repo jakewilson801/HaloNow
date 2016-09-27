@@ -3,6 +3,7 @@ import {
   AppRegistry,
   StyleSheet,
   NavigatorIOS,
+  StatusBar,
   Text,
   View
 } from 'react-native';
@@ -13,11 +14,16 @@ class HaloNow  extends React.Component {
     render() {
         return (
             <NavigatorIOS
-            style={styles.container}
-            initialRoute={{
+              backgroundColor={"rgb(230,45,61)"}
+              barStyle={"light-content"}
+              barTintColor={'rgb(255,45,61)'}
+              translucent={true}
+              titleTextColor={'white'}
+              style={styles.container}
+              initialRoute={{
                 title: 'Recent Games',
                 component: RecentGamesScreen,
-            }}
+              }}
             />
         );
     }
@@ -26,7 +32,7 @@ class HaloNow  extends React.Component {
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+         backgroundColor: 'black',
     },
 });
 
