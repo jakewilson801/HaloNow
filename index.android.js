@@ -6,13 +6,13 @@ import {
   Text,
   View,
   BackAndroid,
-  ToolbarAndroid
+  ToolbarAndroid,
+  StatusBar,
 } from 'react-native';
 
 var RecentGamesScreen = require('./RecentGamesScreen');
-
-
 var _navigator;
+
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator && _navigator.getCurrentRoutes().length > 1) {
     _navigator.pop();
@@ -40,12 +40,17 @@ var RouteMapper = function(route, navigationOperations, onComponentRef) {
 class HaloNow  extends React.Component {
     render() {
         return (
+           <View style={{flex: 1}}>
+            <StatusBar
+              backgroundColor={"#D32F2F"}
+              barStyle={"light-content"}/>
             <Navigator
-            style={styles.container}
-            initialRoute={{name: "Recent Games"}}
-            configureScene={() => Navigator.SceneConfigs.FadeAndroid}
-            renderScene={RouteMapper}
+             style={styles.container}
+             initialRoute={{name: "Recent Games"}}
+             configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+             renderScene={RouteMapper}
             />
+            </View>
         );
     }
 }
@@ -55,6 +60,10 @@ var styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
+   toolbar: {
+       backgroundColor: '#F44336',
+       height: 56,
+  },
 });
 
 AppRegistry.registerComponent('HaloNow', () => HaloNow);

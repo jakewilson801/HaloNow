@@ -19,17 +19,17 @@ class GameCell extends Component {
             TouchableElement = TouchableNativeFeedback;
         }
         return (
-            <View>
-             <TouchableElement
-               underlayColor={'white'}
+         <TouchableElement
+               background={TouchableNativeFeedback.Ripple("red", false)}
                onShowUnderlay={this.props.onHighlight}
                onHideUnderlay={this.props.onUnhighlight}
-               onPress={this.props.onSelect}>
+               underlayColor={'white'}
+               onPress={this.props.onSelect} 
+               > 
                <View style={styles.row}>
                 <Image
-                 source={{uri: this.getMapImage(this.props.game.MapId)}}
-                 style={styles.mapImage}
-                  />
+                  source={{uri: this.getMapImage(this.props.game.MapId)}}
+                  style={styles.mapImage} />
                 <View style={styles.textContainer}>
                 <Text style={styles.mapTitle} numberOfLines={1}>
                  {this.getTitle(this.props.game)}
@@ -40,7 +40,6 @@ class GameCell extends Component {
                </View>
               </View>
             </TouchableElement>
-           </View>
         )
     }
 
@@ -111,7 +110,6 @@ var styles = StyleSheet.create({
     padding: 5,
   },
   mapImage: {
-    backgroundColor: '#dddddd',
     height: 93,
     marginRight: 10,
     width: 93,
