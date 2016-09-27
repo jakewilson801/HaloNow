@@ -91,6 +91,10 @@ class RecentGamesScreen extends Component {
             />
         );
     }
+
+    onEndReached(){
+        
+    }
     
     render() {
         return (
@@ -105,6 +109,7 @@ class RecentGamesScreen extends Component {
               dataSource={this.state.dataSource}
               renderRow={this.renderRow}
               automaticallyAdjustContentInsets={true}
+              onEndReached={this.onEndReached}
               keyboardDismissMode="on-drag"
               keyboardShouldPersistTaps={true}
               showsVerticalScrollIndicator={false}
