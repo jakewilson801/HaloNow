@@ -5,15 +5,20 @@ import {
   NavigatorIOS,
   StatusBar,
   Text,
+  AlertIOS,
   View
 } from 'react-native';
 
 var RecentGamesScreen = require('./RecentGamesScreen');
 
 class HaloNow  extends React.Component {
-
+    constructor() {
+        super();
+        this.state = { gamerTag: '' };
+    }
+    
     render() {
-        return (
+         return (
             <View style={styles.container}>
               <StatusBar
                barStyle={"light-content"}
@@ -28,7 +33,8 @@ class HaloNow  extends React.Component {
                initialRoute={{
                 title: 'Recent Games',
                 component: RecentGamesScreen,
-                statusBarHidden: true
+                statusBarHidden: true,
+                passProps: {gamerTag: ''}
               }}/>
             </View>
         );

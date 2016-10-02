@@ -17,10 +17,10 @@ class GameCell extends Component {
         var TouchableElement = TouchableHighlight;
         if(Platform.OS == 'android'){
             TouchableElement = TouchableNativeFeedback;
+            TouchableElement.background = TouchableNativeFeedback.Ripple("red", false)
         }
         return (
          <TouchableElement
-               background={TouchableNativeFeedback.Ripple("red", false)}
                onShowUnderlay={this.props.onHighlight}
                onHideUnderlay={this.props.onUnhighlight}
                underlayColor={'white'}
@@ -31,20 +31,35 @@ class GameCell extends Component {
                   source={{uri: this.getMapImage(this.props.game.MapId)}}
                   style={styles.mapImage} />
                 <View style={styles.textContainer}>
-                <Text style={styles.mapTitle} numberOfLines={1}>
-                 {this.getTitle(this.props.game)}
-                </Text>
+                 <Text style={styles.resultTitle} numberOfLines={1}>
+                  {this.getReadableResult(this.props.game)}
+                 </Text>
+                 <Text style={styles.mapTitle} numberOfLines={1}>
+                  {this.getTitle(this.props.game)}
+                 </Text>
                 <Text style={{color: 'white', fontSize: 12}}>
                   {this.getKDLabel(this.props.game)}
                 </Text>
+                <Text style={{color: 'white', fontSize: 12}}>
+                  {this.getDate(this.props.game)}
+                </Text>            
                </View>
               </View>
             </TouchableElement>
         )
     }
 
+    getDate(game){
+        return `${game.MatchCompletedDate.ISO8601Date.split('T')[0]}`
+              
+    }
+
     getTitle(game){
-        return `${this.getPlayListTitle(game)} ${this.getScore(game)} ${this.getGameResult(this.props.game.Players[0].Result)}`
+        return `${this.getPlayListTitle(game)} ${this.getScore(game)}`
+    }
+
+    getReadableResult(game) {
+        return `${this.getGameResult(this.props.game.Players[0].Result)}`;
     }
     
     getKDLabel(game){
@@ -65,7 +80,13 @@ class GameCell extends Component {
     }
 
     getScore(game){
-        return `${game.Teams[0].Score}-${game.Teams[1].Score}`
+        if(game.Teams.length > 1) {
+            return `${game.Teams[0].Score}-${game.Teams[1].Score}`;
+        } else if (games.Teams.length == 1) {
+            return `${game.Teams[0].Score}`;
+        } else {
+            return '';
+        }
     }
     
     getGameResult(i){
@@ -101,6 +122,11 @@ var styles = StyleSheet.create({
   mapTitle: {
     color: 'white',
     fontSize: 16,
+    marginBottom: 2,
+  },
+  resultTitle: {
+    color: 'white',
+    fontSize: 22,
     marginBottom: 2,
   },
   row: {
