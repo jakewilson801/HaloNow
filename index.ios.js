@@ -34,7 +34,7 @@ class HaloNow  extends React.Component {
                 title: 'Recent Games',
                 component: RecentGamesScreen,
                 statusBarHidden: true,
-                passProps: {gamerTag: ''}
+                passProps: {gamerTag: 'JakeWilson801'}
               }}/>
             </View>
         );

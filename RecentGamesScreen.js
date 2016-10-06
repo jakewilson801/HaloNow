@@ -42,42 +42,38 @@ class RecentGamesScreen extends Component {
     }
     
     componentDidMount() {
-        AlertIOS.prompt(
-            'Enter your Gamer Tag',
-            null,
-            text => {
-                // console.log(text); 
-                this.setState({gamerTag: text});
-                this.loadGames();
-            });
+        // AlertIOS.prompt(
+        //     'Enter your Gamer Tag',
+        //     'JakeWilson801',
+        //     text => {
+        //         this.setState({gamerTag: text});
+        //         this.loadGames();
+        //     });
+        this.loadGames();
     }
     
     loadGames() {
-        if(this.props.gamerTag !== null || this.props.gamerTag !== '') {
-
-        } else {
-            this.setState({isLoading: true, refreshing: true})
-            fetch(`${API_URL}/${this.state.gamerTag}/matches?start=${this.state.startCount}`, API_ARGS)
-            .then((response) => {
-                this.setState({refreshing: false})
-                var res = response.json()
-                return res;
-            })
-            .catch((error) => {
-                this.setState({isLoading: false, refreshing: false, dataSource: this.getDataSource([])})
-            })
-            .then((responseData) => {
-                if(responseData){
-                    for(var i in responseData.Results) {
-                        if(!this.alreadyInList(responseData.Results[i]))
-                            resultsCache.recentGames.push(responseData.Results[i]);
-                    }
-                    this.setState({isLoading: false, refreshing: false, dataSource: this.getDataSource(resultsCache.recentGames)})
-                } else {
-                    this.setState({isLoading: false, refreshing: false, dataSource: this.getDataSource([])})
+        this.setState({isLoading: true, refreshing: true})
+        fetch(`${API_URL}/${this.state.gamerTag}/matches?start=${this.state.startCount}`, API_ARGS)
+        .then((response) => {
+            this.setState({refreshing: false})
+            var res = response.json()
+            return res;
+        })
+        .catch((error) => {
+            this.setState({isLoading: false, refreshing: false, dataSource: this.getDataSource([])})
+        })
+        .then((responseData) => {
+            if(responseData){
+                for(var i in responseData.Results) {
+                    if(!this.alreadyInList(responseData.Results[i]))
+                        resultsCache.recentGames.push(responseData.Results[i]);
                 }
-            });
-        }
+                this.setState({isLoading: false, refreshing: false, dataSource: this.getDataSource(resultsCache.recentGames)})
+            } else {
+                this.setState({isLoading: false, refreshing: false, dataSource: this.getDataSource([])})
+            }
+        });
     }
 
     alreadyInList(game) {
